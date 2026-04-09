@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEBULA ANNIHILATOR 2026 — GITHUB PAGES EDITION</title>
+    <style>
+        body { 
+            background: linear-gradient(45deg, #0a001f, #ff00ff, #00ffff, #ff0088); 
+            background-size: 400% 400%; 
+            animation: gradient 5s ease infinite; 
+            color: white; font-family: 'Courier New', monospace; 
+            text-align: center; margin:0; padding:0; height:100vh; overflow:hidden; 
+        }
+        h1 { font-size: 4.2em; text-shadow: 0 0 40px #ff00ff, 0 0 80px #00ffff; animation: glitch 0.5s infinite alternate; }
+        button, input { padding: 20px; font-size: 1.9em; margin: 15px; border-radius: 15px; width: 88%; }
+        button { background:#ff00ff; color:black; cursor:pointer; box-shadow:0 0 60px #00ffff; font-weight:bold; }
+        button:hover { background:#00ffff; transform:scale(1.25) rotate(4deg); box-shadow:0 0 90px #ff00ff; }
+        .list { margin:30px auto; width:85%; text-align:left; font-size:1.4em; line-height:1.6; }
+        @keyframes gradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        @keyframes glitch { 0%{transform:translate(0)} 25%{transform:translate(-8px,8px)} 50%{transform:translate(8px,-8px)} 75%{transform:translate(-4px,4px)} }
+    </style>
+</head>
+<body>
+    <h1>NEBULA ANNIHILATOR 2026</h1>
+    <p>REPLIT & SCHOOL FILTERS JUST GOT ASS-BLASTED</p>
+    
+    <input type="text" id="targetUrl" placeholder="Paste any blocked URL (YouTube, Roblox, Nebula mirror...)" value="https://nebulaservices.org/en_US/">
+    <br><br>
+    <button onclick="launchNebula()">🚀 LAUNCH NEBULA SERVICES (WORKING MIRROR)</button>
+    <button onclick="googleTranslateNuke()">🌐 GOOGLE TRANSLATE CLOAK (SLIPS PAST FILTERS)</button>
+    <button onclick="aboutBlankChaos()">🕳️ ABOUT:BLANK STEALTH NUKE (BEST CHANCE ON CHROMEBOOKS)</button>
+
+    <div class="list">
+        <strong>FRESH MIRRORS (copy-paste if buttons fail):</strong><br>
+        • https://nebulaservices.org/en_US/ ← Main Nebula working one<br>
+        • https://holyunblocker.org ← Holy beast mode<br>
+        • Search YouTube "new nebula proxy links April 2026" for daily drops
+    </div>
+
+    <script>
+        function launchNebula() {
+            window.open("https://nebulaservices.org/en_US/", "_blank");
+        }
+
+        function googleTranslateNuke() {
+            let url = document.getElementById("targetUrl").value.trim();
+            if (!url.startsWith("http")) url = "https://" + url;
+            const cloak = `https://translate.google.com/translate?sl=auto&tl=en&u=${encodeURIComponent(url)}`;
+            window.open(cloak, "_blank");
+        }
+
+        function aboutBlankChaos() {
+            let url = document.getElementById("targetUrl").value.trim();
+            if (!url.startsWith("http")) url = "https://" + url;
+            const win = window.open("about:blank", "_blank");
+            if (win) {
+                const iframe = win.document.createElement("iframe");
+                iframe.style.cssText = "position:fixed;width:100vw;height:100vh;top:0;left:0;border:none;z-index:999999;background:#000;";
+                iframe.src = url;
+                win.document.body.appendChild(iframe);
+            } else {
+                alert("Pop-ups blocked? Allow them and smash the button again, legend!");
+            }
+        }
+
+        document.getElementById("targetUrl").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") aboutBlankChaos();
+        });
+    </script>
+</body>
+</html>
