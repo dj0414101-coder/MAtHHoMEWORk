@@ -3,44 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEBULA ANNIHILATOR 2026 — GITHUB PAGES EDITION</title>
+    <title>CROXYPROXY ANNIHILATOR 2026 — NEBULA IS DEAD, LONG LIVE CROXY</title>
     <style>
         body { 
-            background: linear-gradient(45deg, #0a001f, #ff00ff, #00ffff, #ff0088); 
+            background: linear-gradient(45deg, #0a001f, #00ffcc, #ff00ff, #ffff00); 
             background-size: 400% 400%; 
-            animation: gradient 5s ease infinite; 
+            animation: gradient 4s ease infinite; 
             color: white; font-family: 'Courier New', monospace; 
             text-align: center; margin:0; padding:0; height:100vh; overflow:hidden; 
         }
-        h1 { font-size: 4.2em; text-shadow: 0 0 40px #ff00ff, 0 0 80px #00ffff; animation: glitch 0.5s infinite alternate; }
-        button, input { padding: 20px; font-size: 1.9em; margin: 15px; border-radius: 15px; width: 88%; }
-        button { background:#ff00ff; color:black; cursor:pointer; box-shadow:0 0 60px #00ffff; font-weight:bold; }
-        button:hover { background:#00ffff; transform:scale(1.25) rotate(4deg); box-shadow:0 0 90px #ff00ff; }
-        .list { margin:30px auto; width:85%; text-align:left; font-size:1.4em; line-height:1.6; }
+        h1 { font-size: 4.5em; text-shadow: 0 0 40px #00ffcc, 0 0 80px #ff00ff; animation: glitch 0.4s infinite alternate; }
+        button, input { padding: 22px; font-size: 2em; margin: 15px; border-radius: 20px; width: 88%; box-shadow: 0 0 50px #ffff00; }
+        button { background:#ff00ff; color:black; cursor:pointer; font-weight:bold; transition: all 0.3s; }
+        button:hover { background:#00ffcc; transform:scale(1.3) rotate(6deg); box-shadow:0 0 100px #ffff00; }
+        .warning { color: #ffff00; font-size: 1.5em; text-shadow: 0 0 20px red; animation: pulse 1s infinite; }
         @keyframes gradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-        @keyframes glitch { 0%{transform:translate(0)} 25%{transform:translate(-8px,8px)} 50%{transform:translate(8px,-8px)} 75%{transform:translate(-4px,4px)} }
+        @keyframes glitch { 0%{transform:translate(0)} 20%{transform:translate(-10px,10px)} 40%{transform:translate(10px,-10px)} 60%{transform:translate(-5px,5px)} }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
     </style>
 </head>
 <body>
-    <h1>NEBULA ANNIHILATOR 2026</h1>
-    <p>REPLIT & SCHOOL FILTERS JUST GOT ASS-BLASTED</p>
+    <h1>CROXYPROXY ANNIHILATOR 2026</h1>
+    <p class="warning">NEBULA GOT MURDERED — CROXY IS HERE TO VIOLATE THE FILTERS</p>
     
-    <input type="text" id="targetUrl" placeholder="Paste any blocked URL (YouTube, Roblox, Nebula mirror...)" value="https://nebulaservices.org/en_US/">
+    <input type="text" id="targetUrl" placeholder="Paste blocked URL here (YouTube, Roblox, whatever)" value="https://www.youtube.com">
     <br><br>
-    <button onclick="launchNebula()">🚀 LAUNCH NEBULA SERVICES (WORKING MIRROR)</button>
-    <button onclick="googleTranslateNuke()">🌐 GOOGLE TRANSLATE CLOAK (SLIPS PAST FILTERS)</button>
-    <button onclick="aboutBlankChaos()">🕳️ ABOUT:BLANK STEALTH NUKE (BEST CHANCE ON CHROMEBOOKS)</button>
+    <button onclick="launchCroxy()">🚀 LAUNCH CROXYPROXY + AUTO-LOAD TARGET</button>
+    <button onclick="googleTranslateNuke()">🌐 GOOGLE TRANSLATE CLOAK (backup)</button>
+    <button onclick="aboutBlankChaos()">🕳️ ABOUT:BLANK STEALTH NUKE (if croxy gets blocked)</button>
 
-    <div class="list">
-        <strong>FRESH MIRRORS (copy-paste if buttons fail):</strong><br>
-        • https://nebulaservices.org/en_US/ ← Main Nebula working one<br>
-        • https://holyunblocker.org ← Holy beast mode<br>
-        • Search YouTube "new nebula proxy links April 2026" for daily drops
+    <div style="margin:30px auto; width:85%; text-align:left; font-size:1.4em;">
+        <strong>CroxyProxy Direct:</strong> https://www.croxyproxy.com/<br>
+        Paste your URL there manually if the auto button fails.
     </div>
 
     <script>
-        function launchNebula() {
-            window.open("https://nebulaservices.org/en_US/", "_blank");
+        const CROXY_URL = "https://www.croxyproxy.com/";
+
+        function launchCroxy() {
+            let target = document.getElementById("targetUrl").value.trim();
+            if (!target.startsWith("http")) target = "https://" + target;
+            
+            // Open CroxyProxy and try to pass the URL (works via query param on many proxies, fallback to manual)
+            const win = window.open(CROXY_URL + "?url=" + encodeURIComponent(target), "_blank");
+            
+            if (!win) {
+                alert("Pop-up blocked, you absolute legend! Allow pop-ups and smash the button again.");
+            } else {
+                console.log("%cCROXYPROXY DEPLOYED — FILTERS SCREAMING", "color:#00ffcc;font-size:24px");
+            }
         }
 
         function googleTranslateNuke() {
@@ -59,13 +70,12 @@
                 iframe.style.cssText = "position:fixed;width:100vw;height:100vh;top:0;left:0;border:none;z-index:999999;background:#000;";
                 iframe.src = url;
                 win.document.body.appendChild(iframe);
-            } else {
-                alert("Pop-ups blocked? Allow them and smash the button again, legend!");
             }
         }
 
+        // Enter key support because you're a fast degenerate
         document.getElementById("targetUrl").addEventListener("keypress", (e) => {
-            if (e.key === "Enter") aboutBlankChaos();
+            if (e.key === "Enter") launchCroxy();
         });
     </script>
 </body>
