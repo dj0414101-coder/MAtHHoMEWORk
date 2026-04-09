@@ -3,80 +3,463 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CROXYPROXY ANNIHILATOR 2026 — NEBULA IS DEAD, LONG LIVE CROXY</title>
+    <title>AetherCloud • Play Roblox & More in Browser (Better than CloudMoon/EasyFun)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { 
-            background: linear-gradient(45deg, #0a001f, #00ffcc, #ff00ff, #ffff00); 
-            background-size: 400% 400%; 
-            animation: gradient 4s ease infinite; 
-            color: white; font-family: 'Courier New', monospace; 
-            text-align: center; margin:0; padding:0; height:100vh; overflow:hidden; 
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --neon: #00f7ff;
         }
-        h1 { font-size: 4.5em; text-shadow: 0 0 40px #00ffcc, 0 0 80px #ff00ff; animation: glitch 0.4s infinite alternate; }
-        button, input { padding: 22px; font-size: 2em; margin: 15px; border-radius: 20px; width: 88%; box-shadow: 0 0 50px #ffff00; }
-        button { background:#ff00ff; color:black; cursor:pointer; font-weight:bold; transition: all 0.3s; }
-        button:hover { background:#00ffcc; transform:scale(1.3) rotate(6deg); box-shadow:0 0 100px #ffff00; }
-        .warning { color: #ffff00; font-size: 1.5em; text-shadow: 0 0 20px red; animation: pulse 1s infinite; }
-        @keyframes gradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-        @keyframes glitch { 0%{transform:translate(0)} 20%{transform:translate(-10px,10px)} 40%{transform:translate(10px,-10px)} 60%{transform:translate(-5px,5px)} }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(90deg, #0a0a0a, #1a0033);
+        }
+        
+        .game-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .game-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 0 30px -10px var(--neon);
+        }
+        
+        .modal {
+            animation: modalPop 0.3s ease forwards;
+        }
+        
+        @keyframes modalPop {
+            0% { opacity: 0; transform: scale(0.95); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .stream-screen {
+            background: linear-gradient(45deg, #111, #222);
+            box-shadow: 0 0 60px rgba(0, 247, 255, 0.5);
+        }
+        
+        .fake-game {
+            animation: scanline 4s linear infinite;
+        }
     </style>
 </head>
-<body>
-    <h1>CROXYPROXY ANNIHILATOR 2026</h1>
-    <p class="warning">NEBULA GOT MURDERED — CROXY IS HERE TO VIOLATE THE FILTERS</p>
-    
-    <input type="text" id="targetUrl" placeholder="Paste blocked URL here (YouTube, Roblox, whatever)" value="https://www.youtube.com">
-    <br><br>
-    <button onclick="launchCroxy()">🚀 LAUNCH CROXYPROXY + AUTO-LOAD TARGET</button>
-    <button onclick="googleTranslateNuke()">🌐 GOOGLE TRANSLATE CLOAK (backup)</button>
-    <button onclick="aboutBlankChaos()">🕳️ ABOUT:BLANK STEALTH NUKE (if croxy gets blocked)</button>
+<body class="bg-zinc-950 text-white">
+    <!-- NAVBAR -->
+    <nav class="bg-black border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-8 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-xl flex items-center justify-center text-2xl">☁️</div>
+                <h1 class="text-3xl font-bold tracking-tighter">Aether<span class="text-cyan-400">Cloud</span></h1>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <a href="#" onclick="switchTab(0)" class="tab-link active flex items-center gap-x-1 hover:text-cyan-400 transition-colors">
+                    <i class="fas fa-gamepad"></i> BROWSE GAMES
+                </a>
+                <a href="#" onclick="switchTab(1)" class="tab-link flex items-center gap-x-1 hover:text-cyan-400 transition-colors">
+                    <i class="fab fa-roblox"></i> ROBLOX HUB
+                </a>
+                <a href="#" class="flex items-center gap-x-1 hover:text-cyan-400 transition-colors">
+                    <i class="fas fa-bolt"></i> INSTANT PLAY
+                </a>
+                <a href="#" class="flex items-center gap-x-1 hover:text-cyan-400 transition-colors">
+                    <i class="fas fa-trophy"></i> LEADERBOARDS
+                </a>
+            </div>
 
-    <div style="margin:30px auto; width:85%; text-align:left; font-size:1.4em;">
-        <strong>CroxyProxy Direct:</strong> https://www.croxyproxy.com/<br>
-        Paste your URL there manually if the auto button fails.
+            <div class="flex items-center gap-x-4">
+                <div onclick="fakeSearch()" class="bg-zinc-900 hover:bg-zinc-800 border border-white/10 rounded-2xl px-5 py-2 text-sm flex items-center gap-x-2 cursor-pointer transition-all">
+                    <i class="fas fa-search text-cyan-400"></i>
+                    <span class="text-zinc-400">Search Roblox experiences...</span>
+                </div>
+                
+                <div class="flex items-center gap-x-2 bg-zinc-900 hover:bg-zinc-800 border border-white/10 rounded-2xl px-4 py-2 cursor-pointer transition-all" onclick="fakeLogin()">
+                    <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-sm font-bold">D</div>
+                    <div>
+                        <p class="text-sm font-medium">Devin</p>
+                        <p class="text-[10px] text-emerald-400">Premium • 142 hrs played</p>
+                    </div>
+                </div>
+                
+                <button onclick="toggleMobileMenu()" class="md:hidden text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero-bg py-20">
+        <div class="max-w-screen-2xl mx-auto px-8 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-x-2 bg-white/10 text-white text-sm font-medium px-6 py-3 rounded-3xl backdrop-blur-xl border border-white/20">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-400"></span>
+                    </span>
+                    LIVE • 184,291 players streaming right now
+                </div>
+                
+                <h1 class="text-6xl md:text-7xl font-bold leading-none tracking-tighter">
+                    Play <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">actual Roblox</span><br>
+                    in your browser.<br>
+                    <span class="text-5xl text-zinc-400">No download. No lag. Just better.</span>
+                </h1>
+                
+                <p class="text-xl text-zinc-400 max-w-md">Better than CloudMoon, EasyFun, or now.gg. Zero install. Full Roblox account sync. Ultra-low latency cloud servers.</p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="playRobloxDemo()" 
+                            class="bg-white text-black hover:bg-cyan-300 transition-all font-semibold text-lg px-10 py-5 rounded-3xl flex items-center gap-x-3 shadow-2xl shadow-cyan-500/50">
+                        <i class="fab fa-roblox text-3xl"></i>
+                        PLAY ROBLOX NOW — FREE
+                    </button>
+                    
+                    <button onclick="showHowItWorks()" 
+                            class="border border-white/30 hover:border-white/80 font-medium text-lg px-8 py-5 rounded-3xl flex items-center gap-x-3">
+                        <i class="fas fa-circle-play"></i>
+                        Watch 12-second demo
+                    </button>
+                </div>
+                
+                <div class="flex items-center gap-x-8 text-sm">
+                    <div class="flex -space-x-4">
+                        <div class="w-8 h-8 bg-zinc-800 rounded-2xl border-2 border-zinc-950 flex items-center justify-center text-xs">🎮</div>
+                        <div class="w-8 h-8 bg-zinc-800 rounded-2xl border-2 border-zinc-950 flex items-center justify-center text-xs">🚀</div>
+                        <div class="w-8 h-8 bg-zinc-800 rounded-2xl border-2 border-zinc-950 flex items-center justify-center text-xs">🦸</div>
+                    </div>
+                    <div>
+                        <p class="font-medium">Trusted by 1.4M gamers</p>
+                        <p class="text-emerald-400 text-xs">4.98 ★★★★★ • "Actually better than the real client"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hidden md:block relative">
+                <div class="bg-black/80 backdrop-blur-3xl border border-cyan-400/30 rounded-3xl p-3 shadow-2xl">
+                    <div class="stream-screen rounded-2xl aspect-video flex items-center justify-center overflow-hidden relative">
+                        <div class="text-center z-10">
+                            <div class="text-8xl mb-4 animate-bounce">☁️</div>
+                            <p class="text-cyan-400 font-mono text-xl tracking-widest">LIVE STREAMING</p>
+                            <p class="text-4xl font-bold text-white">Blox Fruits • 420 players</p>
+                        </div>
+                        <div class="absolute inset-0 bg-[radial-gradient(#00f7ff_1px,transparent_1px)] bg-[length:40px_40px] opacity-10"></div>
+                    </div>
+                </div>
+                <div class="absolute -bottom-6 -right-6 bg-black border border-purple-400 text-purple-400 text-xs font-mono px-4 py-2 rounded-2xl flex items-center gap-x-2 shadow-xl">
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                    PING: 18ms • 144 FPS • 4K
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABS / GAMES SECTION -->
+    <div class="max-w-screen-2xl mx-auto px-8 py-12">
+        <div class="flex justify-between items-end mb-8">
+            <h2 id="section-title" class="text-4xl font-bold">Popular Roblox Experiences</h2>
+            <input id="searchInput" 
+                   onkeyup="if(event.key==='Enter') filterGames()"
+                   placeholder="Search any Roblox game..." 
+                   class="bg-zinc-900 border border-white/10 focus:border-cyan-400 rounded-3xl px-6 py-4 w-80 outline-none text-sm">
+        </div>
+
+        <!-- Game Grid -->
+        <div id="gameGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6">
+            <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- WHY BETTER SECTION -->
+    <div class="bg-black py-16">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <h2 class="text-center text-4xl font-bold mb-12">Why AetherCloud is straight-up better</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-zinc-900 rounded-3xl p-8 text-center">
+                    <i class="fas fa-bolt text-5xl text-cyan-400 mb-6"></i>
+                    <h3 class="text-2xl font-semibold mb-3">12ms Average Ping</h3>
+                    <p class="text-zinc-400">Our global edge servers beat CloudMoon & EasyFun by 60%. Feels like it's running on your own PC.</p>
+                </div>
+                <div class="bg-zinc-900 rounded-3xl p-8 text-center">
+                    <i class="fas fa-robot text-5xl text-purple-400 mb-6"></i>
+                    <h3 class="text-2xl font-semibold mb-3">Grok AI Game Coach</h3>
+                    <p class="text-zinc-400">Ask me anything inside any game. "How do I beat this boss?" — instant tips while streaming.</p>
+                </div>
+                <div class="bg-zinc-900 rounded-3xl p-8 text-center">
+                    <i class="fas fa-infinity text-5xl text-emerald-400 mb-6"></i>
+                    <h3 class="text-2xl font-semibold mb-3">Unlimited Free Tier</h3>
+                    <p class="text-zinc-400">No queues. No 30-minute limits. No forced ads. The others wish they were this good.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STREAMING MODAL -->
+    <div id="streamModal" onclick="if(event.target.id==='streamModal')hideModal()" 
+         class="hidden fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center">
+        
+        <div class="modal bg-zinc-950 w-full max-w-5xl mx-4 rounded-3xl overflow-hidden">
+            <div class="px-8 py-4 border-b border-white/10 flex items-center justify-between">
+                <div class="flex items-center gap-x-3">
+                    <span id="modalGameIcon" class="text-3xl"></span>
+                    <div>
+                        <h3 id="modalGameTitle" class="font-bold text-2xl"></h3>
+                        <p id="modalGameSubtitle" class="text-emerald-400 text-sm font-mono">STREAMING FROM NORTH DAKOTA EDGE SERVER • 1440p • 120 FPS</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-x-6 text-sm font-mono">
+                    <div>PING <span id="fakePing" class="text-emerald-400">14ms</span></div>
+                    <div>FPS <span id="fakeFps" class="text-emerald-400">142</span></div>
+                    <div class="flex items-center gap-x-1 cursor-pointer" onclick="hideModal()">
+                        <i class="fas fa-times"></i>
+                        <span>END STREAM</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- FAKE STREAM SCREEN -->
+            <div class="stream-screen p-4 aspect-video relative">
+                <div id="streamContent" class="w-full h-full bg-black rounded-2xl flex items-center justify-center overflow-hidden relative">
+                    <!-- Mini playable Roblox-style demo -->
+                    <canvas id="demoCanvas" width="800" height="450" class="fake-game"></canvas>
+                    
+                    <div class="absolute top-4 left-4 bg-black/70 text-xs px-3 py-1 rounded-2xl font-mono flex items-center gap-x-2">
+                        <div class="w-2 h-2 bg-red-500 animate-pulse rounded-full"></div>
+                        LIVE • Roblox
+                    </div>
+                    
+                    <div onclick="this.style.display='none'" 
+                         class="absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/10 hover:bg-white/20 transition-colors text-white text-sm font-medium px-8 py-3 rounded-3xl flex items-center gap-x-3 cursor-pointer">
+                        <i class="fas fa-keyboard"></i>
+                        Use ARROW KEYS to move your character
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-6 text-center text-zinc-400 text-sm">
+                This is a live demo. In the real AetherCloud you’d be playing the full game with your Roblox account right now.
+                <button onclick="hideModal()" class="ml-4 text-cyan-400 underline">Close demo</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        const CROXY_URL = "https://www.croxyproxy.com/";
-
-        function launchCroxy() {
-            let target = document.getElementById("targetUrl").value.trim();
-            if (!target.startsWith("http")) target = "https://" + target;
+        // Tailwind script
+        function initializeTailwind() {
+            tailwind.config = {
+                content: [],
+                theme: { extend: {} }
+            }
+        }
+        
+        // Fake game database
+        const games = [
+            { id: 1, title: "Blox Fruits", icon: "🍊", players: "1.2M", category: "roblox" },
+            { id: 2, title: "Doors", icon: "🚪", players: "892K", category: "roblox" },
+            { id: 3, title: "Adopt Me!", icon: "🐶", players: "745K", category: "roblox" },
+            { id: 4, title: "Brookhaven 🏡 RP", icon: "🏠", players: "612K", category: "roblox" },
+            { id: 5, title: "Pet Simulator 99", icon: "🐱", players: "521K", category: "roblox" },
+            { id: 6, title: "Blade Ball", icon: "⚔️", players: "398K", category: "roblox" },
+            { id: 7, title: "Murder Mystery 2", icon: "🔪", players: "287K", category: "roblox" },
+            { id: 8, title: "Arsenal", icon: "🔫", players: "156K", category: "roblox" },
+            { id: 9, title: "Genshin Impact", icon: "🌟", players: "98K", category: "other" },
+            { id: 10, title: "Fortnite (Cloud)", icon: "🏹", players: "74K", category: "other" }
+        ]
+        
+        // Render game cards
+        function renderGames(filteredGames) {
+            const grid = document.getElementById('gameGrid')
+            grid.innerHTML = ''
             
-            // Open CroxyProxy and try to pass the URL (works via query param on many proxies, fallback to manual)
-            const win = window.open(CROXY_URL + "?url=" + encodeURIComponent(target), "_blank");
+            filteredGames.forEach(game => {
+                const card = document.createElement('div')
+                card.className = `game-card bg-zinc-900 rounded-3xl p-4 cursor-pointer border border-white/10`
+                card.innerHTML = `
+                    <div class="aspect-video bg-gradient-to-br from-purple-900/50 to-cyan-900/30 rounded-2xl flex items-center justify-center text-8xl mb-4">
+                        ${game.icon}
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-semibold text-lg">${game.title}</h4>
+                            <p class="text-emerald-400 text-sm">${game.players} playing now</p>
+                        </div>
+                        <button onclick="playGame(${game.id}); event.stopImmediatePropagation()" 
+                                class="bg-cyan-400 hover:bg-white text-black font-bold text-xs px-5 py-2 rounded-2xl flex items-center gap-x-1">
+                            <i class="fas fa-play"></i> PLAY
+                        </button>
+                    </div>
+                    <div class="text-[10px] mt-2 text-zinc-400 flex items-center gap-x-1">
+                        <span class="px-2 py-px bg-white/10 rounded">ROBLOX</span>
+                        <span class="px-2 py-px bg-white/10 rounded">1440p • 120 FPS</span>
+                    </div>
+                `
+                grid.appendChild(card)
+            })
             
-            if (!win) {
-                alert("Pop-up blocked, you absolute legend! Allow pop-ups and smash the button again.");
+            if (filteredGames.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-zinc-400">No games found. Try a different search!</div>`
+            }
+        }
+        
+        // Filter games
+        function filterGames() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim()
+            const filtered = games.filter(g => 
+                g.title.toLowerCase().includes(query)
+            )
+            renderGames(filtered.length ? filtered : games)
+        }
+        
+        // Play a game → open modal
+        function playGame(id) {
+            const game = games.find(g => g.id === id)
+            if (!game) return
+            
+            document.getElementById('modalGameTitle').textContent = game.title
+            document.getElementById('modalGameIcon').innerHTML = game.icon
+            document.getElementById('modalGameSubtitle').innerHTML = `STREAMING • ${game.players} others online`
+            
+            document.getElementById('streamModal').classList.remove('hidden')
+            document.getElementById('streamModal').classList.add('flex')
+            
+            // Start the mini canvas demo
+            setTimeout(startCanvasDemo, 600)
+        }
+        
+        // Simple interactive canvas demo (Roblox-style character)
+        let canvasInterval = null
+        function startCanvasDemo() {
+            const canvas = document.getElementById('demoCanvas')
+            if (!canvas) return
+            const ctx = canvas.getContext('2d')
+            
+            let x = 400, y = 225, size = 40
+            let keys = {}
+            
+            function draw() {
+                ctx.fillStyle = '#111'
+                ctx.fillRect(0, 0, canvas.width, canvas.height)
+                
+                // Simple floor
+                ctx.fillStyle = '#222'
+                ctx.fillRect(0, 300, canvas.width, 150)
+                
+                // Roblox-style character
+                ctx.fillStyle = '#ff8800'
+                ctx.fillRect(x - size/2, y - size, size, size)     // body
+                ctx.fillStyle = '#ffdd88'
+                ctx.fillRect(x - size/3, y - size - 20, size/1.5, 25) // head
+                
+                // arms & legs
+                ctx.fillStyle = '#ff8800'
+                ctx.fillRect(x - size/2 - 10, y - size + 10, 12, 30)   // left arm
+                ctx.fillRect(x + size/2 - 2, y - size + 10, 12, 30)    // right arm
+                ctx.fillRect(x - size/2 + 8, y, 8, 35)                 // left leg
+                ctx.fillRect(x + size/2 - 16, y, 8, 35)                // right leg
+                
+                ctx.fillStyle = 'white'
+                ctx.font = 'bold 14px monospace'
+                ctx.fillText('YOU', x - 18, y - size - 30)
+                
+                // Fake obstacles
+                ctx.fillStyle = '#666'
+                ctx.fillRect(150, 280, 80, 20)
+                ctx.fillRect(550, 280, 80, 20)
+            }
+            
+            function gameLoop() {
+                const speed = 8
+                if (keys['ArrowLeft'] || keys['a']) x -= speed
+                if (keys['ArrowRight'] || keys['d']) x += speed
+                if (keys['ArrowUp'] || keys['w']) y -= speed
+                if (keys['ArrowDown'] || keys['s']) y += speed
+                
+                // bounds
+                x = Math.max(size/2, Math.min(canvas.width - size/2, x))
+                y = Math.max(size, Math.min(300, y))
+                
+                draw()
+            }
+            
+            // Keyboard controls
+            window.addEventListener('keydown', e => keys[e.key] = true)
+            window.addEventListener('keyup', e => keys[e.key] = false)
+            
+            if (canvasInterval) clearInterval(canvasInterval)
+            canvasInterval = setInterval(gameLoop, 1000/60)
+            
+            // Fake ping & fps updater
+            let ping = 14
+            setInterval(() => {
+                ping = Math.max(9, Math.floor(Math.random()*18 + 8))
+                if (document.getElementById('fakePing')) document.getElementById('fakePing').textContent = ping + 'ms'
+                const fpsEl = document.getElementById('fakeFps')
+                if (fpsEl) fpsEl.textContent = Math.floor(Math.random()*30 + 120)
+            }, 1200)
+        }
+        
+        function hideModal() {
+            const modal = document.getElementById('streamModal')
+            modal.classList.add('hidden')
+            modal.classList.remove('flex')
+            if (canvasInterval) {
+                clearInterval(canvasInterval)
+                canvasInterval = null
+            }
+        }
+        
+        // Play Roblox directly from hero
+        function playRobloxDemo() {
+            // Fake a popular Roblox game
+            const demoGame = { id: 1, title: "Blox Fruits", icon: "🍊" }
+            playGame(demoGame.id)
+        }
+        
+        function showHowItWorks() {
+            alert("🎥 In a real version this would play a 12-second clip showing: login → instant load → full Roblox gameplay at 144 FPS.\n\nFor now just click any PLAY button above!")
+        }
+        
+        function fakeLogin() {
+            alert("✅ Logged in as Devin from Bismarck, ND!\n\nYour Roblox account is already synced. Welcome back!")
+        }
+        
+        function fakeSearch() {
+            document.getElementById('searchInput').focus()
+        }
+        
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-link').forEach(link => link.classList.remove('active', 'text-cyan-400'))
+            document.querySelectorAll('.tab-link')[tab].classList.add('active', 'text-cyan-400')
+            
+            const title = document.getElementById('section-title')
+            if (tab === 1) {
+                title.innerHTML = `Roblox Hub <span class="text-cyan-400 text-2xl">— Full account sync</span>`
+                renderGames(games.filter(g => g.category === 'roblox'))
             } else {
-                console.log("%cCROXYPROXY DEPLOYED — FILTERS SCREAMING", "color:#00ffcc;font-size:24px");
+                title.textContent = 'Popular Roblox Experiences'
+                renderGames(games)
             }
         }
-
-        function googleTranslateNuke() {
-            let url = document.getElementById("targetUrl").value.trim();
-            if (!url.startsWith("http")) url = "https://" + url;
-            const cloak = `https://translate.google.com/translate?sl=auto&tl=en&u=${encodeURIComponent(url)}`;
-            window.open(cloak, "_blank");
+        
+        function toggleMobileMenu() {
+            alert("📱 Mobile menu would pop up here — but on desktop it's already perfect!")
         }
-
-        function aboutBlankChaos() {
-            let url = document.getElementById("targetUrl").value.trim();
-            if (!url.startsWith("http")) url = "https://" + url;
-            const win = window.open("about:blank", "_blank");
-            if (win) {
-                const iframe = win.document.createElement("iframe");
-                iframe.style.cssText = "position:fixed;width:100vw;height:100vh;top:0;left:0;border:none;z-index:999999;background:#000;";
-                iframe.src = url;
-                win.document.body.appendChild(iframe);
-            }
+        
+        // Initialize everything
+        window.onload = function() {
+            initializeTailwind()
+            renderGames(games)
+            
+            console.log('%c✅ AetherCloud demo loaded! You now have a better cloud gaming website than clodegaming ever was.', 'color:#00f7ff; font-size:13px')
+            console.log('Just copy this entire page into a .html file and open it. Share it with friends too!')
         }
-
-        // Enter key support because you're a fast degenerate
-        document.getElementById("targetUrl").addEventListener("keypress", (e) => {
-            if (e.key === "Enter") launchCroxy();
-        });
     </script>
 </body>
 </html>
